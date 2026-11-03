@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Link Generator - Naija Tools</title>
+<style>
+body{font-family:Arial;background:#f0f2f5;margin:0;padding:0}
+.header{background:#25D366;padding:20px;text-align:center;color:white}
+.container{max-width:450px;margin:20px auto;background:white;padding:25px;border-radius:15px;box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+input{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
+button{width:100%;padding:13px;background:#25D366;color:white;border:none;border-radius:10px;font-weight:bold;font-size:16px;cursor:pointer}
+.result{background:#e8f5e9;padding:15px;border-radius:10px;margin-top:15px;word-break:break-all;display:none}
+.ad-box{background:#fff3cd;padding:15px;text-align:center;border:1px dashed #ffc107;margin:15px 0;border-radius:10px;font-size:13px}
+.footer{text-align:center;padding:20px;font-size:12px;color:gray}
+</style>
+</head>
+<body>
+<div class="header">
+<h2>🇳🇬 Naija WhatsApp Tools</h2>
+<p>Make money link for your business FREE</p>
+</div>
+
+<div class="container">
+<div class="ad-box">AD SPACE - Your Google AdSense go show here later</div>
+
+<h3>🔗 Generate WhatsApp Link</h3>
+<input id="phone" placeholder="Enter number e.g 08012345678">
+<input id="msg" placeholder="Message e.g Hello, I want to buy...">
+<button onclick="genLink()">Generate My Link</button>
+
+<div id="result" class="result">
+<p><b>Your Link:</b></p>
+<p id="link"></p>
+<button onclick="copyLink()" style="background:#128C7E;margin-top:10px">Copy Link</button>
+<a id="openWa" target="_blank"><button style="background:#075E54;margin-top:10px">Open in WhatsApp</button></a>
+</div>
+
+<div class="ad-box">AD SPACE 2</div>
+
+<h4>💰 Support this free tool</h4>
+<p style="font-size:13px">If this tool help your business, buy me data 🙏</p>
+<button onclick="alert('Flutterwave payment go dey here soon! For now add your Opay/PalmPay number')" style="background:#f5a623">Donate / Tip</button>
+
+</div>
+
+<div class="footer">
+© 2026 NaijaTools - Built with Termux<br>
+<a href="#">Privacy</a> | <a href="#">Contact</a>
+</div>
+<a id="openWa" ...>Open in WhatsApp</button></a>
+</div>
+
+<div id="qrBox" style="display:none; text-align:center; margin-top:15px;">
+<p><b>Your QR Code (Print for shop):</b></p>
+<img id="qrImg" style="width:200px; border:10px solid white; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);">
+<br>
+<a id="downloadQR" download="whatsapp-qr.png"><button style="background:#333;margin-top:10px">Download QR</button></a>
+</div>
+<script>
+function genLink(){
+ let p = document.getElementById('phone').value.replace(/\D/g,'');
+ if(p.startsWith('0')) p = '234'+p.substring(1);
+ if(p=='' ){ alert('Put number'); return; }
+ let m = encodeURIComponent(document.getElementById('msg').value);
+ let url = `https://wa.me/${p}${m ? '?text='+m : ''}`;
+ document.getElementById('link').innerText = url;
+ document.getElementById('openWa').href = url;
+ document.getElementById('result').style.display='block';
+}
+function copyLink(){
+ navigator.clipboard.writeText(document.getElementById('link').innerText);
+ alert('Copied! Share am for your business');
+}
+</script>
+</body>
+</html>
