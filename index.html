@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7264442388909955"
-     crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Naija WhatsApp Tools - Free Link Generator</title>
+<title>Naija WhatsApp Tools - Free WhatsApp Link Generator</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
-header{background:#25D366;color:white;padding:20px;text-align:center}
-.container{max-width:600px;margin:20px auto;background:white;padding:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
-input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
-button{background:#25D366;color:white;padding:12px;width:100%;border:none;border-radius:8px;font-size:16px;cursor:pointer}
-button:hover{background:#128C7E}
-.ad-space{background:#eef;padding:15px;text-align:center;margin:15px 0;border:1px dashed #25D366}
-footer{text-align:center;padding:20px;color:#666}
-footer a{color:#25D366;text-decoration:none;margin:0 8px}
-#result{margin-top:15px;padding:10px;background:#e8f5e9;border-radius:8px;word-break:break-all;display:none}
+body{margin:0;font-family:system-ui;background:#f5f5f5}
+.header{background:#22c55e;color:white;text-align:center;padding:20px 10px}
+.header h1{margin:0;font-size:22px}
+.header p{margin:5px 0 0;opacity:0.9;font-size:14px}
+.card{max-width:500px;margin:20px auto;background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.card h2{font-size:18px;margin-top:0}
+input,textarea{width:100%;padding:14px;border:1px solid #ddd;border-radius:8px;margin-bottom:12px;box-sizing:border-box;font-size:15px}
+button.main{width:100%;background:#22c55e;color:white;border:none;padding:14px;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold}
+button.main:hover{background:#16a34a}
+.result{margin-top:15px;padding:15px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;display:none;word-break:break-all}
+.result a{color:#16a34a;font-weight:bold}
+.ad{margin-top:15px;border:1px dashed #a78bfa;background:#f5f3ff;text-align:center;padding:14px;border-radius:6px;font-size:13px;color:#333}
+.footer{text-align:center;margin:25px;color:#666;font-size:13px}
+.footer a{color:#22c55e;text-decoration:none;margin:0 6px}
+.btns{display:flex;gap:8px;margin-top:10px}
+.btns button{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd;cursor:pointer}
 </style>
 </head>
 <body>
-<header>
-<h2>🇳🇬 Naija WhatsApp Tools</h2>
+<div class="header">
+<h1>🇳🇬 Naija WhatsApp Tools</h1>
 <p>Free Tools for Your Business</p>
-</header>
-<div class="container">
-<h3>WhatsApp Link Generator</h3>
-<input type="text" id="phone" placeholder="Enter WhatsApp number e.g 2348012345678">
-<textarea id="message" placeholder="Enter your message (optional)"></textarea>
-<button onclick="generateLink()">Generate Link</button>
-<div id="result"></div>
-<div class="ad-space">AD SPACE - Your AdSense Ad Will Show Here</div>
 </div>
-<footer>
-<a href="about.html">About Us</a> |
-<a href="privacy.html">Privacy Policy</a> |
-<a href="contact.html">Contact</a>
+
+<div class="card">
+<h2>WhatsApp Link Generator</h2>
+<input id="number" placeholder="Enter WhatsApp number e.g 2348012345678">
+<textarea id="msg" placeholder="Enter your message (optional)"></textarea>
+<button class="main" onclick="gen()">Generate Link</button>
+
+<div id="result" class="result">
+<b>Your Link:</b><br>
+<a id="link" href="" target="_blank"></a>
+<div class="btns">
+<button onclick="copyLink()">Copy</button>
+<button onclick="openWA()">Open WhatsApp</button>
+</div>
+</div>
+
+<div class="ad">AD SPACE - Your AdSense Ad Will Show Here<br><small>Paste your AdSense code here to earn</small></div>
+</div>
+
+<div class="footer">
+<a href="about.html">About Us</a> | <a href="privacy.html">Privacy Policy</a> | <a href="contact.html">Contact</a>
 <p>© 2026 Naija WhatsApp Tools - Built in Lagos</p>
-</footer>
+</div>
+
 <script>
-function generateLink(){
-let phone=document.getElementById('phone').value.replace(/\D/g,'');
-let msg=encodeURIComponent(document.getElementById('message').value);
-if(!phone){alert('Enter phone number');return;}
-let link=`https://wa.me/${phone}` + (msg ? `?text=${msg}` : '');
-document.getElementById('result').style.display='block';
-document.getElementById('result').innerHTML=`Your Link:<br><a href="${link}" target="_blank">${link}</a><br><br><button onclick="navigator.clipboard.writeText('${link}');alert('Copied!')">Copy Link</button>`;
+function gen(){
+ let num = document.getElementById('number').value.replace(/[^0-9]/g,'');
+ let msg = document.getElementById('msg').value;
+ if(!num){alert('Enter number');return}
+ if(num.startsWith('0')){num='234'+num.slice(1)}
+ let url = 'https://wa.me/'+num;
+ if(msg){url+='?text='+encodeURIComponent(msg)}
+ document.getElementById('link').href=url;
+ document.getElementById('link').innerText=url;
+ document.getElementById('result').style.display='block';
+}
+function copyLink(){
+ navigator.clipboard.writeText(document.getElementById('link').href);
+ alert('Copied!');
+}
+function openWA(){
+ window.open(document.getElementById('link').href,'_blank');
 }
 </script>
 </body>
