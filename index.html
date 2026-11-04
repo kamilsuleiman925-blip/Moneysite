@@ -7,20 +7,15 @@
 <style>
 body{margin:0;font-family:system-ui;background:#f5f5f5}
 .header{background:#22c55e;color:white;text-align:center;padding:20px 10px}
-.header h1{margin:0;font-size:22px}
-.header p{margin:5px 0 0;opacity:0.9;font-size:14px}
 .card{max-width:500px;margin:20px auto;background:white;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-.card h2{font-size:18px;margin-top:0}
 input,textarea{width:100%;padding:14px;border:1px solid #ddd;border-radius:8px;margin-bottom:12px;box-sizing:border-box;font-size:15px}
 button.main{width:100%;background:#22c55e;color:white;border:none;padding:14px;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold}
-button.main:hover{background:#16a34a}
-.result{margin-top:15px;padding:15px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;display:none;word-break:break-all}
-.result a{color:#16a34a;font-weight:bold}
-.ad{margin-top:15px;border:1px dashed #a78bfa;background:#f5f3ff;text-align:center;padding:14px;border-radius:6px;font-size:13px;color:#333}
+.result{margin-top:15px;padding:15px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;display:none;word-break:break-all;text-align:center}
+.ad{margin-top:15px;border:1px dashed #a78bfa;background:#f5f3ff;text-align:center;padding:14px;border-radius:6px;font-size:13px}
 .footer{text-align:center;margin:25px;color:#666;font-size:13px}
-.footer a{color:#22c55e;text-decoration:none;margin:0 6px}
 .btns{display:flex;gap:8px;margin-top:10px}
 .btns button{flex:1;padding:10px;border-radius:8px;border:1px solid #ddd;cursor:pointer}
+img.qr{margin:10px auto;display:block;border:1px solid #ddd;border-radius:8px}
 </style>
 </head>
 <body>
@@ -28,49 +23,42 @@ button.main:hover{background:#16a34a}
 <h1>🇳🇬 Naija WhatsApp Tools</h1>
 <p>Free Tools for Your Business</p>
 </div>
-
 <div class="card">
 <h2>WhatsApp Link Generator</h2>
-<input id="number" placeholder="Enter WhatsApp number e.g 2348012345678">
-<textarea id="msg" placeholder="Enter your message (optional)"></textarea>
+<input id="number" placeholder="Enter WhatsApp number e.g 07045585822 or 2347045585822">
+<textarea id="msg" placeholder="Enter your message (optional) e.g Good morning"></textarea>
 <button class="main" onclick="gen()">Generate Link</button>
-
 <div id="result" class="result">
 <b>Your Link:</b><br>
-<a id="link" href="" target="_blank"></a>
+<a id="link" href="" target="_blank" style="color:#16a34a;font-weight:bold"></a>
+<img id="qr" class="qr" src="" width="200" height="200">
 <div class="btns">
 <button onclick="copyLink()">Copy</button>
 <button onclick="openWA()">Open WhatsApp</button>
 </div>
 </div>
-
-<div class="ad">AD SPACE - Your AdSense Ad Will Show Here<br><small>Paste your AdSense code here to earn</small></div>
+<div class="ad">AD SPACE - Your AdSense Ad Will Show Here<br>Paste your AdSense code to earn</div>
 </div>
-
-<div class="footer">
-<a href="about.html">About Us</a> | <a href="privacy.html">Privacy Policy</a> | <a href="contact.html">Contact</a>
-<p>© 2026 Naija WhatsApp Tools - Built in Lagos</p>
-</div>
-
+<div class="footer">© 2026 Naija WhatsApp Tools - Built in Lagos</div>
 <script>
 function gen(){
- let num = document.getElementById('number').value.replace(/[^0-9]/g,'');
+ let raw = document.getElementById('number').value.replace(/[^0-9]/g,'');
  let msg = document.getElementById('msg').value;
- if(!num){alert('Enter number');return}
- if(num.startsWith('0')){num='234'+num.slice(1)}
+ if(!raw){alert('Enter number');return}
+ let num = raw;
+ if(num.startsWith('0')) num = '234' + num.slice(1);
+ else if(num.length==10) num = '234' + num;
+ else if(!num.startsWith('234') && num.length==11 && num.startsWith('0')) num = '234'+num.slice(1);
+ if(num.length==10) num='234'+num;
  let url = 'https://wa.me/'+num;
- if(msg){url+='?text='+encodeURIComponent(msg)}
+ if(msg) url+='?text='+encodeURIComponent(msg);
  document.getElementById('link').href=url;
  document.getElementById('link').innerText=url;
+ document.getElementById('qr').src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(url);
  document.getElementById('result').style.display='block';
 }
-function copyLink(){
- navigator.clipboard.writeText(document.getElementById('link').href);
- alert('Copied!');
-}
-function openWA(){
- window.open(document.getElementById('link').href,'_blank');
-}
+function copyLink(){navigator.clipboard.writeText(document.getElementById('link').href);alert('Copied!');}
+function openWA(){window.open(document.getElementById('link').href,'_blank');}
 </script>
 </body>
 </html>
